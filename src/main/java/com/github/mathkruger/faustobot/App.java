@@ -1,20 +1,18 @@
 package com.github.mathkruger.faustobot;
 
+import java.io.IOException;
+import java.util.Properties;
+
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 
-/**
- * Hello world!
- *
- */
 public class App {
-    public static void main(final String[] args) {
-        // Create your bot passing the token received from @BotFather
-        final TelegramBot bot = new TelegramBot("960086829:AAGPUDcynj803cXe5gTgRYkawyUI76depds");
+    public static void main(final String[] args) throws IOException {
+        Properties props = PropertiesLoader.loadProperties("application.properties");
+        final TelegramBot bot = new TelegramBot(props.getProperty("telegram.bot.key"));
 
-        // Register for updates
         bot.setUpdatesListener(updates -> {
             for (Update update : updates) {
                 final long chatId = update.message().chat().id();
@@ -23,6 +21,6 @@ public class App {
 
             return UpdatesListener.CONFIRMED_UPDATES_ALL;
         });
-        
+
     }
 }
